@@ -251,19 +251,6 @@ class IPCProvider(JSONBaseProvider):
                     except socket.timeout:
                         timeout.sleep(0)
                         continue
-                    if raw_response == b"":
-                        timeout.sleep(0)
-                    elif has_valid_json_rpc_ending(raw_response):
-                        try:
-                            response = self.decode_rpc_response(raw_response)
-                        except JSONDecodeError:
-                            timeout.sleep(0)
-                            continue
-                        else:
-                            return response
-                    else:
-                        timeout.sleep(0)
-                        continue
 
 
 # A valid JSON RPC response can only end in } or ] http://www.jsonrpc.org/specification
